@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	proxyServer := server.NewProxyServer(":7860", "127.0.0.1:3389")
+	proxyServer := server.NewProxyServer(":7860", "127.0.0.1:3389", "saif@visionituk.com")
 	proxyServer.Listen()
 }

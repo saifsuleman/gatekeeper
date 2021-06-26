@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
+	"net/smtp"
 )
 
 // multi-factor authentication
@@ -98,7 +99,28 @@ func (mfa *MultiFactorAuth) IsAuthenticated(ip string) bool {
 		}
 	}
 
-	for _, email := range mfa.Emails {
+	go mfa.SendEmailAlerts(ip)
+	return false
+}
 
+func (mfa *MultiFactorAuth) SendEmailAlerts(ip string) {
+	from := "rdpgateway@gmail.com"
+	password := "Plasmetic12"
+
+	code, err := mfa.GenerateCode(ip)
+	if err != nil {
+		panic(err)
 	}
+	link := fmt.Sprintf("http://rdp.plasmoid.io/api/authenticate?code=%s", code)
+
+	smtpHost := "smtp.gmail.com"
+	smtpPort := "587"
+
+	message := []byte(fmt.Sprintf("RDP Login Attempt from %s. Click below to verify this IP.\n\n%s", ip, link))
+	auth := smtp.PlainAuth("", from, password, smtpHost)
+
+	if err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, mfa.Emails, message); err != nil {
+		panic(err)
+	}
+	fmt.Println("Emails sent!")
 }
