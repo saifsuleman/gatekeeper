@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"github.com/saifsuleman/gatekeeper/server"
+)
 
 func main() {
-	fmt.Println("Hello, world!")
+	proxyServer := server.NewProxyServer(":7860", "127.0.0.1:3389")
+	proxyServer.Listen()
 }
