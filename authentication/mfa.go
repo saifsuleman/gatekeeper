@@ -2,11 +2,13 @@ package authentication
 
 import (
 	"crypto/rand"
+	"crypto/tls"
 	"encoding/base64"
 	"fmt"
 	"github.com/gorilla/mux"
+	gomail "gopkg.in/mail.v2"
 	"net/http"
-	"net/smtp"
+	"os"
 )
 
 // multi-factor authentication
@@ -104,23 +106,34 @@ func (mfa *MultiFactorAuth) IsAuthenticated(ip string) bool {
 }
 
 func (mfa *MultiFactorAuth) SendEmailAlerts(ip string) {
-	from := "rdpgateway@gmail.com"
-	password := "Plasmetic12"
-
 	code, err := mfa.GenerateCode(ip)
 	if err != nil {
 		panic(err)
 	}
-	link := fmt.Sprintf("http://rdp.plasmoid.io/api/authenticate?code=%s", code)
+	link := fmt.Sprintf("http://rdp.plasmoid.io:8182/api/authenticate?code=%s", code)
 
-	smtpHost := "smtp.gmail.com"
-	smtpPort := "587"
-
-	message := []byte(fmt.Sprintf("RDP Login Attempt from %s. Click below to verify this IP.\n\n%s", ip, link))
-	auth := smtp.PlainAuth("", from, password, smtpHost)
-
-	if err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, mfa.Emails, message); err != nil {
+	hostname, err := os.Hostname()
+	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Emails sent!")
+
+	body := fmt.Sprintf("RDP Login Attempt from %s.\nClick below to verify this IP.\n\n%s", ip, link)
+
+	dialer := gomail.NewDialer("smtp.gmail.com", 587, "rdpgatekeeper@gmail.com", "Plasmetic12")
+	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+
+	var messages []*gomail.Message
+
+	for _, email := range mfa.Emails {
+		m := gomail.NewMessage()
+		m.SetHeader("From", "RDP Gatekeeper <rdpgatekeeper@gmail.com>")
+		m.SetHeader("To", email)
+		m.SetHeader("Subject", fmt.Sprintf("RDP Access Attempt on machine: %s", hostname))
+		m.SetBody("text/plain", body)
+		messages = append(messages, m)
+	}
+
+	if err := dialer.DialAndSend(messages...); err != nil {
+		panic(err)
+	}
 }

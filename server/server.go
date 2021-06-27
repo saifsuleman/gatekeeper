@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"github.com/saifsuleman/gatekeeper/authentication"
 	"github.com/saifsuleman/gatekeeper/pipe"
 	"log"
@@ -49,12 +48,14 @@ func (p *ProxyServer) Listen() {
 }
 
 func (p *ProxyServer) handleConnection(conn net.Conn) {
-	whitelisted := p.Auth.IsAuthenticated(GetIP(conn))
+	ip := GetIP(conn)
+	whitelisted := p.Auth.IsAuthenticated(ip)
 	if !whitelisted {
-		fmt.Println("Proxy dialed - noauth!")
+		log.Printf("Connection dialed from %s - IP not authenticated!\n", ip)
+		_ = conn.Close()
 		return
 	}
-	fmt.Println("Successful proxy dialed!")
+	log.Printf("Connection dialed from %s - IP authenticated!\n", ip)
 
 	redirect, err := net.Dial("tcp", p.Redirect)
 	if err != nil {

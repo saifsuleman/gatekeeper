@@ -14,26 +14,25 @@ type ProxyAuthHandler struct {
 func NewProxyAuthHandler(filepath string) (ProxyAuthHandler, error) {
 	var handler ProxyAuthHandler
 
-	var file *os.File
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
-		file, err = os.Create(filepath)
+		file, err := os.Create(filepath)
 		if err != nil {
-			return handler, err
+			return handler, fmt.Errorf("line 21: %s", err)
 		}
 		if _, err := file.Write([]byte("[]")); err != nil {
-			return handler, err
+			return handler, fmt.Errorf("line 24: %s", err)
 		}
-	} else {
-		file, err = os.Open(filepath)
-		if err != nil {
-			return handler, err
-		}
+		file.Close()
+	}
+	file, err := os.Open(filepath)
+	if err != nil {
+		return handler, fmt.Errorf("line 29: %s", err)
 	}
 
 	defer file.Close()
 	var whitelist []string
 	if err := json.NewDecoder(file).Decode(&whitelist); err != nil {
-		return handler, err
+		return handler, fmt.Errorf("line 36: %s", err)
 	}
 
 	handler = ProxyAuthHandler{
@@ -52,14 +51,14 @@ func (p *ProxyAuthHandler) Save() error {
 			return err
 		}
 	} else {
-		file, err = os.Open(p.WhitelistFilepath)
+		file, err = os.OpenFile(p.WhitelistFilepath, os.O_WRONLY, 0644)
 		if err != nil {
 			return err
 		}
 	}
 	defer file.Close()
 
-	return json.NewEncoder(file).Encode(&p.WhitelistFilepath)
+	return json.NewEncoder(file).Encode(&p.Whitelist)
 }
 
 func (p *ProxyAuthHandler) AddWhitelistIP(ip string) error {
