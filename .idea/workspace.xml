@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1313230f-362a-419b-ade5-212c6006c90e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authentication/authentication.go" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/authentication.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authentication/mfa.go" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/mfa.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.go" afterDir="false" />
     </list>
@@ -22,7 +18,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="$PROJECT_DIR$/../../../Program Files/Go" />
+  <component name="GOROOT" url="file:///usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -67,33 +63,10 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="752" y="447" key="#GOROOT" timestamp="1624805480598">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="752" y="447" key="#GOROOT/0.0.1920.1040@0.0.1920.1040" timestamp="1624805480598" />
-    <state width="1877" height="228" key="GridCell.Tab.0.bottom" timestamp="1624750903165">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="228" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1624750903165" />
-    <state width="2005" height="362" key="GridCell.Tab.0.bottom/0.0.2048.1240@0.0.2048.1240" timestamp="1624733868178" />
-    <state width="1877" height="228" key="GridCell.Tab.0.center" timestamp="1624750903165">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="228" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1624750903165" />
-    <state width="2005" height="362" key="GridCell.Tab.0.center/0.0.2048.1240@0.0.2048.1240" timestamp="1624733868178" />
-    <state width="1877" height="228" key="GridCell.Tab.0.left" timestamp="1624750903165">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="228" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1624750903165" />
-    <state width="2005" height="362" key="GridCell.Tab.0.left/0.0.2048.1240@0.0.2048.1240" timestamp="1624733868178" />
-    <state width="1877" height="228" key="GridCell.Tab.0.right" timestamp="1624750903165">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="228" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1624750903165" />
-    <state width="2005" height="362" key="GridCell.Tab.0.right/0.0.2048.1240@0.0.2048.1240" timestamp="1624733868178" />
   </component>
 </project>

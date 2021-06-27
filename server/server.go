@@ -13,9 +13,10 @@ type ProxyServer struct {
 	Redirect    string
 	Connections map[net.Conn]pipe.ConnectionPipe
 	Auth        authentication.MultiFactorAuth
+	APIAddress string
 }
 
-func NewProxyServer(address string, redirect string, emails ...string) ProxyServer {
+func NewProxyServer(address string, redirect string, apiAddress string, emails ...string) ProxyServer {
 	proxyAuthHandler, err := authentication.NewProxyAuthHandler("whitelist.json")
 	if err != nil {
 		panic(err)
@@ -27,11 +28,12 @@ func NewProxyServer(address string, redirect string, emails ...string) ProxyServ
 		Redirect:    redirect,
 		Connections: map[net.Conn]pipe.ConnectionPipe{},
 		Auth:        auth,
+		APIAddress: apiAddress,
 	}
 }
 
 func (p *ProxyServer) Listen() {
-	go p.Auth.Start(":8182")
+	go p.Auth.Start(p.APIAddress)
 	listener, err := net.Listen("tcp", p.Address)
 	if err != nil {
 		log.Fatalf("Error binding to address: %s\n", err)
