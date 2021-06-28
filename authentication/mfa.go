@@ -8,7 +8,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/saifsuleman/gatekeeper/logger"
 	gomail "gopkg.in/mail.v2"
-	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -108,13 +107,8 @@ func (mfa *MultiFactorAuth) wrapApiFunc(path string, f func(w http.ResponseWrite
 	}
 }
 
-func (mfa *MultiFactorAuth) ViewLog(w http.ResponseWriter, r *http.Request) {
-	data, err := ioutil.ReadAll(mfa.Logger.File)
-	if err != nil {
-		_, _ = fmt.Fprintf(w, "error reading file: %s", err)
-		return
-	}
-	_, _ = fmt.Fprintf(w, string(data))
+func (mfa *MultiFactorAuth) ViewLog(w http.ResponseWriter, _ *http.Request) {
+	_, _ = fmt.Fprintf(w, string(mfa.Logger.CachedLog))
 }
 
 func (mfa *MultiFactorAuth) HandleAuthenticate(w http.ResponseWriter, r *http.Request) {
