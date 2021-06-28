@@ -160,7 +160,7 @@ func (mfa *MultiFactorAuth) SendEmailAlerts(ip string) {
 	if err != nil {
 		panic(err)
 	}
-	link := fmt.Sprintf("%s/api/authenticate?code=%s", mfa.DefaultApiUrl, code)
+	link := fmt.Sprintf("%s/authenticate?code=%s", mfa.DefaultApiUrl, code)
 
 	hostname, err := os.Hostname()
 	if err != nil {
