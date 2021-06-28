@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1313230f-362a-419b-ade5-212c6006c90e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logger/logger.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/mfa.go" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/mfa.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.go" afterDir="false" />
     </list>
@@ -43,6 +47,11 @@
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/config" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="go build github.com/saifsuleman/gatekeeper" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="gatekeeper" />
@@ -63,7 +72,19 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VgoProject">

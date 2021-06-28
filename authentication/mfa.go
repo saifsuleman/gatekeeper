@@ -12,19 +12,20 @@ import (
 )
 
 // multi-factor authentication
-
 type MultiFactorAuth struct {
 	ProxyAuthHandler ProxyAuthHandler
 	Emails           []string
 	AuthCodes        map[string]string
+	DefaultApiUrl    string
 	Router           *mux.Router
 }
 
-func NewMFA(handler ProxyAuthHandler, emails ...string) MultiFactorAuth {
+func NewMFA(handler ProxyAuthHandler, defaultApiUrl string, emails ...string) MultiFactorAuth {
 	return MultiFactorAuth{
 		ProxyAuthHandler: handler,
 		Emails:           emails,
 		AuthCodes:        map[string]string{},
+		DefaultApiUrl:    defaultApiUrl,
 		Router:           mux.NewRouter(),
 	}
 }
@@ -110,7 +111,7 @@ func (mfa *MultiFactorAuth) SendEmailAlerts(ip string) {
 	if err != nil {
 		panic(err)
 	}
-	link := fmt.Sprintf("http://rdp.plasmoid.io:8182/api/authenticate?code=%s", code)
+	link := fmt.Sprintf("%s/api/authenticate?code=%s", mfa.DefaultApiUrl, code)
 
 	hostname, err := os.Hostname()
 	if err != nil {
