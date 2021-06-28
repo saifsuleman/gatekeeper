@@ -24,7 +24,7 @@ func InitializeLogger(filepath string) Logger {
 		file.Close()
 	}
 
-	file, err := os.OpenFile(filepath, os.O_WRONLY, 0644)
+	file, err := os.OpenFile(filepath, os.O_RDWR, 0644)
 	if err != nil {
 		panic(err)
 	}

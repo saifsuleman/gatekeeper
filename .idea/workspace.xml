@@ -3,12 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1313230f-362a-419b-ade5-212c6006c90e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authentication/mfa.go" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/mfa.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatekeeper.exe" beforeDir="false" afterPath="$PROJECT_DIR$/gatekeeper.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logger/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/logger/logger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/gatekeeper.exe" beforeDir="false" afterPath="$PROJECT_DIR$/run/gatekeeper.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/gatekeeper.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/gatekeeper.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

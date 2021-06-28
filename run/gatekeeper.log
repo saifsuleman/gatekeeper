@@ -1,1 +1,4 @@
-2021/06/28 13:55:29 Connection dialed from 90.250.8.59 - IP not authenticated!
+2021/06/28 14:29:08 Unauthorized API attempt [/api/log] from: 138.68.183.151
+!
+2021/06/28 14:24:03 Unauthorized API attempt [/api/authenticate] from: 90.250.8.59
+2021/06/28 14:24:24 Unauthorized API attempt [/api/log] from: 192.168.0.1
