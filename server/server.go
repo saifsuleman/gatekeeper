@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/saifsuleman/gatekeeper/authentication"
 	"github.com/saifsuleman/gatekeeper/config"
+	"github.com/saifsuleman/gatekeeper/logger"
 	"github.com/saifsuleman/gatekeeper/pipe"
 	"log"
 	"net"
@@ -17,12 +18,12 @@ type ProxyServer struct {
 	APIAddress  string
 }
 
-func NewProxyServer(config config.ApplicationConfig) ProxyServer {
+func NewProxyServer(config config.ApplicationConfig, logger logger.Logger) ProxyServer {
 	proxyAuthHandler, err := authentication.NewProxyAuthHandler("whitelist.json")
 	if err != nil {
 		panic(err)
 	}
-	auth := authentication.NewMFA(proxyAuthHandler, config.DefaultApiUrl, config.Emails...)
+	auth := authentication.NewMFA(proxyAuthHandler, logger, config.ApiWhitelist, config.DefaultApiUrl, config.Emails...)
 
 	return ProxyServer{
 		Address:     config.ProxyAddress,

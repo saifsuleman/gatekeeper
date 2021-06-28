@@ -6,20 +6,16 @@ import (
 	"os"
 )
 
-type logWriter struct {
-	file *os.File
+type Logger struct {
+	File *os.File
 }
 
-func (lw *logWriter) Write(data []byte) (n int, err error) {
+func (l *Logger) Write(data []byte) (n int, err error) {
 	fmt.Print(string(data))
-	return lw.file.Write(data)
+	return l.File.Write(data)
 }
 
-func newLogWriter(file *os.File) logWriter {
-	return logWriter{file}
-}
-
-func InitializeLogger(filepath string) {
+func InitializeLogger(filepath string) Logger {
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
 		file, err := os.Create(filepath)
 		if err != nil {
@@ -32,6 +28,7 @@ func InitializeLogger(filepath string) {
 	if err != nil {
 		panic(err)
 	}
-	lw := newLogWriter(file)
-	log.SetOutput(&lw)
+	logger := Logger{file}
+	log.SetOutput(&logger)
+	return logger
 }

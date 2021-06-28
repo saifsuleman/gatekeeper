@@ -16,6 +16,7 @@ type ApplicationConfig struct {
 	ApiAddress      string   `json:"apiAddress"`
 	LoggerPath      string   `json:"loggerPath"`
 	DefaultApiUrl   string   `json:"defaultApiUrl"`
+	ApiWhitelist    []string `json:"apiWhitelist"`
 	Emails          []string `json:"emails"`
 }
 

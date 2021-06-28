@@ -8,7 +8,7 @@ import (
 
 func main() {
 	appConfig := config.NewApplicationConfig("config.json")
-	logger.InitializeLogger(appConfig.LoggerPath)
-	proxyServer := server.NewProxyServer(appConfig)
+	l := logger.InitializeLogger(appConfig.LoggerPath)
+	proxyServer := server.NewProxyServer(appConfig, l)
 	proxyServer.Listen()
 }

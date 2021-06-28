@@ -6,7 +6,11 @@ import (
 	"encoding/base64"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/saifsuleman/gatekeeper/logger"
 	gomail "gopkg.in/mail.v2"
+	"io/ioutil"
+	"log"
+	"net"
 	"net/http"
 	"os"
 )
@@ -17,15 +21,19 @@ type MultiFactorAuth struct {
 	Emails           []string
 	AuthCodes        map[string]string
 	DefaultApiUrl    string
+	ApiWhitelist     []string
 	Router           *mux.Router
+	Logger           logger.Logger
 }
 
-func NewMFA(handler ProxyAuthHandler, defaultApiUrl string, emails ...string) MultiFactorAuth {
+func NewMFA(handler ProxyAuthHandler, logger logger.Logger, apiWhitelist []string, defaultApiUrl string, emails ...string) MultiFactorAuth {
 	return MultiFactorAuth{
 		ProxyAuthHandler: handler,
 		Emails:           emails,
 		AuthCodes:        map[string]string{},
+		ApiWhitelist:     apiWhitelist,
 		DefaultApiUrl:    defaultApiUrl,
+		Logger:           logger,
 		Router:           mux.NewRouter(),
 	}
 }
@@ -61,11 +69,52 @@ func (mfa *MultiFactorAuth) GetCodeIP(code string) (string, bool) {
 }
 
 func (mfa *MultiFactorAuth) Start(address string) {
-	mfa.Router.HandleFunc("/api/authenticate", mfa.HandleAuthenticate)
+	mfa.Router.HandleFunc("/api/authenticate", mfa.wrapApiFunc("/api/authenticate", mfa.HandleAuthenticate))
+	mfa.Router.HandleFunc("/api/log", mfa.wrapApiFunc("/api/log", mfa.ViewLog))
+
 	fmt.Printf("Listening on: %s\n", address)
 	if err := http.ListenAndServe(address, mfa.Router); err != nil {
 		panic(err)
 	}
+}
+
+func (mfa *MultiFactorAuth) HasApiAccess(r *http.Request) bool {
+	if len(mfa.ApiWhitelist) == 0 {
+		return true
+	}
+
+	address, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err != nil {
+		return false
+	}
+	for _, v := range mfa.ApiWhitelist {
+		if v == address {
+			return true
+		}
+	}
+	return false
+}
+
+func (mfa *MultiFactorAuth) wrapApiFunc(path string, f func(w http.ResponseWriter, r *http.Request)) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if !mfa.HasApiAccess(r) {
+			if address, _, err := net.SplitHostPort(r.RemoteAddr); err == nil {
+				log.Printf("Unauthorized API attempt [%s] from: %s\n", path, address)
+			}
+			_, _ = fmt.Fprint(w, "unauthorized")
+			return
+		}
+		f(w, r)
+	}
+}
+
+func (mfa *MultiFactorAuth) ViewLog(w http.ResponseWriter, r *http.Request) {
+	data, err := ioutil.ReadAll(mfa.Logger.File)
+	if err != nil {
+		_, _ = fmt.Fprintf(w, "error reading file: %s", err)
+		return
+	}
+	_, _ = fmt.Fprintf(w, string(data))
 }
 
 func (mfa *MultiFactorAuth) HandleAuthenticate(w http.ResponseWriter, r *http.Request) {
