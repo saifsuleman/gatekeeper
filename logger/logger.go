@@ -1,9 +1,23 @@
 package logger
 
 import (
+	"fmt"
 	"log"
 	"os"
 )
+
+type logWriter struct {
+	file *os.File
+}
+
+func (lw *logWriter) Write(data []byte) (n int, err error) {
+	fmt.Print(string(data))
+	return lw.file.Write(data)
+}
+
+func newLogWriter(file *os.File) logWriter {
+	return logWriter{file}
+}
 
 func InitializeLogger(filepath string) {
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
@@ -18,5 +32,6 @@ func InitializeLogger(filepath string) {
 	if err != nil {
 		panic(err)
 	}
-	log.SetOutput(file)
+	lw := newLogWriter(file)
+	log.SetOutput(&lw)
 }
