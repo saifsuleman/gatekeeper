@@ -1,0 +1,14 @@
+{
+  "proxyAddress": ":7777",
+  "redirectAddress": "127.0.0.1:3389",
+  "apiAddress": ":8182",
+  "loggerPath": "gatekeeper.log",
+  "defaultApiUrl": "https://rdp.plasmoid.io:8182/api",
+  "apiWhitelist": [
+    "::1",
+    "127.0.0.1"
+  ],
+  "emails": [
+    "example@gatekeeper.io"
+  ]
+}

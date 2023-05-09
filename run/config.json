@@ -1,0 +1,9 @@
+{
+  "proxyAddress": ":7777",
+  "redirectAddress": "127.0.0.1:5500",
+  "apiAddress": ":8182",
+  "loggerPath": "gatekeeper.log",
+  "defaultApiUrl": "http://127.0.0.1:8182/api",
+  "apiWhitelist": ["::1", "127.0.0.1", "138.68.183.151"],
+  "emails": ["saif@visionituk.com"]
+}
